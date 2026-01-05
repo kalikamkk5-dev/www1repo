@@ -1,0 +1,12 @@
+version: 1.0.{build}
+image: Visual Studio 2019
+
+build: off
+
+# این بخش باعث می‌شود حتی اگر بیلد وجود نداشته باشد، اسکریپت اجرا شود
+install:
+  - ps: Write-Host "Connecting to RDP..."
+
+# این دستور جادویی است که اتصال ریموت را برقرار می‌کند
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://github.com/appveyor/ci/blob/master/scripts/enable-rdp.ps1?raw=true'))
